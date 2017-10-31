@@ -27,7 +27,8 @@ while True:
 
     # Sets the corresponding window value to True to indicate that the packet has
     # been received.
-    window[int(message) - base] = True
+    if (int(message) - base >= 0):
+        window[int(message) - base] = True
 
     print("Receiving: " + message)
 

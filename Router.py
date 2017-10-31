@@ -35,9 +35,17 @@ while True:
         # Otherwise packet is sent to receiver.
         receiver_socket.send(message)
 
-        # Collects acknowledgement message from receiver and forwards to sender.
-        reply = receiver_socket.recv(1024)
-        sender_socket.send(reply)
+        odds = randint(1, 100)
+
+        # If random integer falls outside range, then ACK drop is simulated.
+        reply, receiver_address = receiver_socket.recvfrom(1024)
+        if odds >= 35:
+            # Collects acknowledgement message from receiver and forwards to sender.
+            sender_socket.send(reply)
+        else:
+            print(reply.decode() + " dropped.")
+    else:
+        print("Packet " + str(message.decode()) + " dropped.")
 
 receiver_socket.close()
 sender_socket.close()
