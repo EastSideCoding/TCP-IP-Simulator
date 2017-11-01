@@ -25,12 +25,15 @@ while True:
     if message == "CLOSE":
         break
 
+    print("Receiving: " + message)
+
     # Sets the corresponding window value to True to indicate that the packet has
     # been received.
     if (int(message) - base >= 0):
-        window[int(message) - base] = True
-
-    print("Receiving: " + message)
+        if window[int(message) - base]:
+            print("DUPLICATE PACKET: " + message)
+        else:
+            window[int(message) - base] = True
 
     # Status strings to be printed at the end of the loop to add clarity.
     sending_queue = "Sending packets: "
